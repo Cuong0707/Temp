@@ -46,7 +46,11 @@ public class HoaDonDAO extends MainDao<HoaDon, String>{
         String sql="SELECT * FROM HoaDon";
         return this.selectBySql(sql);
     }
-
+    public List<HoaDon> selectAllbyentity(String entity,String a){
+        String sql="SELECT * FROM HoaDon ORDER BY "+entity+" "+a;
+        List<HoaDon> list = this.selectBySql(sql);
+        return list;
+    }
     @Override
     protected List<HoaDon> selectBySql(String sql, Object... args) {
         List<HoaDon> list = new ArrayList<HoaDon>();

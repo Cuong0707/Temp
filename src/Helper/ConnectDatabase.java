@@ -29,7 +29,6 @@ public class ConnectDatabase {
     
     
     public static PreparedStatement getStmt(String sql, Object...args) throws SQLException{
-        
         Connection connection = DriverManager.getConnection(dburl, username, password);
         PreparedStatement pstmt = null;
         if(sql.trim().startsWith("{")){
@@ -55,7 +54,7 @@ public class ConnectDatabase {
             return rs;
         } 
         catch (Exception e) {
-            System.out.println("Lỗi 1: "+ e);
+            System.out.println("Lỗi connect: "+ e);
         }
         return null;
     }

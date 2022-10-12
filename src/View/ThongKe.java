@@ -4,6 +4,7 @@ package View;
 import Dao.HoaDonDAO;
 import Dao.NhanVienDAO;
 import Model.NhanVien;
+import Model.HoaDon;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -43,6 +44,7 @@ public class ThongKe extends javax.swing.JFrame {
         cboSapxeptheo = new javax.swing.JComboBox<>();
         btnXemchitiet = new javax.swing.JButton();
         btnXuatfile = new javax.swing.JButton();
+        btnThoat = new javax.swing.JButton();
         tabpnlQuanLy = new javax.swing.JTabbedPane();
         pnlNhanvien = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -66,13 +68,17 @@ public class ThongKe extends javax.swing.JFrame {
         mnDanhmuc = new javax.swing.JMenu();
         mnThemmoi = new javax.swing.JMenu();
         mnThongke = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản Lý Nhà Hàng");
         setName(""); // NOI18N
         setResizable(false);
         setSize(new java.awt.Dimension(721, 406));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlTimkiem.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
 
@@ -103,7 +109,6 @@ public class ThongKe extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setText("Sắp Xếp Theo");
 
-        cboChoncot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboChoncot.setMaximumSize(new java.awt.Dimension(72, 26));
         cboChoncot.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -151,6 +156,13 @@ public class ThongKe extends javax.swing.JFrame {
 
         btnXuatfile.setText("Xuất File");
 
+        btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlToolLayout = new javax.swing.GroupLayout(pnlTool);
         pnlTool.setLayout(pnlToolLayout);
         pnlToolLayout.setHorizontalGroup(
@@ -166,6 +178,10 @@ public class ThongKe extends javax.swing.JFrame {
                     .addComponent(btnXemchitiet, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                     .addComponent(btnXuatfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(pnlToolLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(btnThoat)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlToolLayout.setVerticalGroup(
             pnlToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +194,8 @@ public class ThongKe extends javax.swing.JFrame {
                 .addComponent(btnXemchitiet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXuatfile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnThoat)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -241,7 +259,7 @@ public class ThongKe extends javax.swing.JFrame {
             pnlNhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNhanvienLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -280,7 +298,7 @@ public class ThongKe extends javax.swing.JFrame {
             pnlHoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHoadonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -314,7 +332,7 @@ public class ThongKe extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -348,7 +366,7 @@ public class ThongKe extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -382,7 +400,7 @@ public class ThongKe extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -416,7 +434,7 @@ public class ThongKe extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -439,10 +457,6 @@ public class ThongKe extends javax.swing.JFrame {
         mnThongke.setText("Thống Kê");
         mnThongke.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenuBar1.add(mnThongke);
-
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Button-exit-icon.png"))); // NOI18N
-        jMenu2.setText("Thoát");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -491,12 +505,35 @@ public class ThongKe extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimkiemActionPerformed
 
     private void cboChoncotItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChoncotItemStateChanged
-
+        
+        if(pnlNhanvien.isShowing())
+        {
+            this.showtableNhanvien();
+        }
+        else if(pnlHoadon.isShowing())
+        {
+            this.showtableHoaDon();
+        }
     }//GEN-LAST:event_cboChoncotItemStateChanged
 
     private void cboSapxeptheoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboSapxeptheoItemStateChanged
-
+        if(pnlNhanvien.isShowing())
+        {
+            this.showtableNhanvien();
+        }
+        else if(pnlHoadon.isShowing())
+        {
+            this.showtableHoaDon();
+        }
     }//GEN-LAST:event_cboSapxeptheoItemStateChanged
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        this.ketThuc();
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -507,13 +544,13 @@ public class ThongKe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnXemchitiet;
     private javax.swing.JButton btnXuatfile;
     private javax.swing.JComboBox<String> cboChoncot;
     private javax.swing.JComboBox<String> cboSapxeptheo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -578,44 +615,58 @@ public class ThongKe extends javax.swing.JFrame {
     {
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0);
-        try {
-            List<NhanVien> list = NVdao.selectAll();
-            if(cboSapxeptheo.getSelectedItem().equals("Tăng"))
-            {
-                Collections.sort(list, new Comparator<NhanVien>() {
-                @Override
-                public int compare(NhanVien nv1, NhanVien nv2) {
-                    return (nv1.getHoTen().compareTo(nv2.getHoTen()));
-
+        if(cboChoncot.getItemCount()<1 )
+        {
+            try {
+                List<NhanVien> list = NVdao.selectAll();
+                for (NhanVien nv : list) {
+                    Object[] row = {
+                        nv.getMaNV(),
+                        nv.getHoTen(),
+                        nv.getGioiTinh(),
+                        nv.getsDt(),
+                        nv.getDiaChi(),
+                        nv.getMaCv(),
+                        nv.getMaCatruc(),
+                        nv.getLuong(),
+                        nv.getMatKhau()
+                    };
+                    model.addRow(row);    
                 }
-                });
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
             }
-            else{
-                Collections.sort(list, new Comparator<NhanVien>() {
-                    @Override
-                    public int compare(NhanVien nv1, NhanVien nv2) {
-                        return (nv2.getHoTen().compareTo(nv1.getHoTen()));
-                    }
-                });
+        }
+        else{
+            try {
+                String a;
+                if(cboSapxeptheo.getSelectedItem().equals("Tăng"))
+                {
+                    a = "ASC";
+                }
+                else{
+                    a= "DESC";
+                }
+                List<NhanVien> list = NVdao.selectAllbyentity(nhanVien.getEntity().get(cboChoncot.getSelectedIndex()),a);
+                for (NhanVien nv : list) {
+                    Object[] row = {
+                        nv.getMaNV(),
+                        nv.getHoTen(),
+                        nv.getGioiTinh(),
+                        nv.getsDt(),
+                        nv.getDiaChi(),
+                        nv.getMaCv(),
+                        nv.getMaCatruc(),
+                        nv.getLuong(),
+                        nv.getMatKhau()
+                    };
+                    model.addRow(row);    
+                }
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
             }
-            for (NhanVien nv : list) {
-                Object[] row = {
-                    nv.getMaNV(),
-                    nv.getHoTen(),
-                    nv.getGioiTinh(),
-                    nv.getsDt(),
-                    nv.getDiaChi(),
-                    nv.getMaCv(),
-                    nv.getMaCatruc(),
-                    nv.getLuong(),
-                    nv.getMatKhau()
-                };
-                model.addRow(row);
-                
-            }
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
         }
     }
     
@@ -624,21 +675,52 @@ public class ThongKe extends javax.swing.JFrame {
     {
         DefaultTableModel model = (DefaultTableModel) tblHoadon.getModel();
         model.setRowCount(0);
-        try {
-            List<Model.HoaDon> list = HDdao.selectAll();
-            for (Model.HoaDon a : list) {
+        if(cboChoncot.getItemCount()<1 )
+        {
+            try {
+                List<Model.HoaDon> list = HDdao.selectAll();
+                for (Model.HoaDon a : list) {
                 Object[] row = {
                     a.getMaHd(),
                     a.getNgayLap(),
                     a.getNguoiLap(),
                     a.getHinhThuctt(),
                     a.getMaKhachhang()
-                };
-                model.addRow(row);
+                    };
+                    model.addRow(row);
+                }
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
             }
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu !!");
+        }
+        else{
+            try {
+                String a;
+                if(cboSapxeptheo.getSelectedItem().equals("Tăng"))
+                {
+                    a = "ASC";
+                }
+                else{
+                    a= "DESC";
+                }
+                List<HoaDon> list = HDdao.selectAllbyentity(hoaDon.getEntity().get(cboChoncot.getSelectedIndex()), a);
+                for (HoaDon b : list) 
+                {
+                    Object[] row = {
+                        b.getMaHd(),
+                        b.getNgayLap(),
+                        b.getNguoiLap(),
+                        b.getHinhThuctt(),
+                        b.getMaKhachhang()
+                        };
+                    model.addRow(row);
+                }    
+                
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
+            }
         }
     }
     public void fillChoncot(JTable a)
@@ -702,16 +784,11 @@ public class ThongKe extends javax.swing.JFrame {
         
         
     }
-//    public void sapXeptable(JTable a)
-//    {
-//        DefaultComboBoxModel model = (DefaultComboBoxModel) a.getModel();
-//        Collections.sort(listnv, new Comparator<NhanVien>() {
-//            @Override
-//            public int compare(NhanVien nv1, NhanVien nv2) {
-//                return (nv1.getEntity().get(cboChoncot.getSelectedIndex()).compareTo(nv2.getEntity().get(cboChoncot.getSelectedIndex())));
-//                
-//            }
-//        });
-//        for(int i = 0;i<listnv)
-//    }
+    void ketThuc(){
+        int a = JOptionPane.showConfirmDialog(this,"Bạn muốn kết thúc làm việc?","Hệ Thống",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+        if(a==JOptionPane.YES_OPTION)
+        {
+            System.exit(0);
+        }
+    }
 }
