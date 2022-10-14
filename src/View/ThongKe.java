@@ -3,11 +3,16 @@ package View;
 
 import Dao.HoaDonDAO;
 import Dao.NhanVienDAO;
+import Dao.PhieuNhapDAO;
+import Helper.OutputExcel;
 import Model.NhanVien;
 import Model.HoaDon;
+import Model.PhieuNhap;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,6 +22,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ThongKe extends javax.swing.JFrame {
 
@@ -52,18 +62,18 @@ public class ThongKe extends javax.swing.JFrame {
         pnlHoadon = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHoadon = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        pnlPhieunhap = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
+        tblPhieunhap = new javax.swing.JTable();
+        pnlNguyenlieu = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
+        tblNguyenLieu = new javax.swing.JTable();
+        pnlKhachhang = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
+        tblKhachhang = new javax.swing.JTable();
+        pnlCatruc = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
+        tblCaTruc = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnDanhmuc = new javax.swing.JMenu();
         mnThemmoi = new javax.swing.JMenu();
@@ -155,6 +165,11 @@ public class ThongKe extends javax.swing.JFrame {
         btnXemchitiet.setText("Xem Chi Tiết");
 
         btnXuatfile.setText("Xuất File");
+        btnXuatfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatfileActionPerformed(evt);
+            }
+        });
 
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
@@ -304,77 +319,77 @@ public class ThongKe extends javax.swing.JFrame {
 
         tabpnlQuanLy.addTab("Hóa Đơn", pnlHoadon);
 
-        jPanel4.setBackground(new java.awt.Color(255, 220, 126));
+        pnlPhieunhap.setBackground(new java.awt.Color(255, 220, 126));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblPhieunhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaPhieuNhap", "MaNgLieu", "DonGia", "DonViTinh", "SoLuong", "NgayLapPhieu", "NgayNhap", "MaCC", "NguoiNhap"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tblPhieunhap);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlPhieunhapLayout = new javax.swing.GroupLayout(pnlPhieunhap);
+        pnlPhieunhap.setLayout(pnlPhieunhapLayout);
+        pnlPhieunhapLayout.setHorizontalGroup(
+            pnlPhieunhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPhieunhapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        pnlPhieunhapLayout.setVerticalGroup(
+            pnlPhieunhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPhieunhapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tabpnlQuanLy.addTab("Phiếu Nhập", jPanel4);
+        tabpnlQuanLy.addTab("Phiếu Nhập", pnlPhieunhap);
 
-        jPanel5.setBackground(new java.awt.Color(255, 220, 126));
+        pnlNguyenlieu.setBackground(new java.awt.Color(255, 220, 126));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblNguyenLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaLoaiNguyenLieu", "TenLoaiNglieu"
             }
         ));
-        jScrollPane4.setViewportView(jTable3);
+        jScrollPane4.setViewportView(tblNguyenLieu);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlNguyenlieuLayout = new javax.swing.GroupLayout(pnlNguyenlieu);
+        pnlNguyenlieu.setLayout(pnlNguyenlieuLayout);
+        pnlNguyenlieuLayout.setHorizontalGroup(
+            pnlNguyenlieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNguyenlieuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pnlNguyenlieuLayout.setVerticalGroup(
+            pnlNguyenlieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlNguyenlieuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tabpnlQuanLy.addTab("Nguyên Liệu", jPanel5);
+        tabpnlQuanLy.addTab("Nguyên Liệu", pnlNguyenlieu);
 
-        jPanel6.setBackground(new java.awt.Color(255, 220, 126));
+        pnlKhachhang.setBackground(new java.awt.Color(255, 220, 126));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblKhachhang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -382,63 +397,63 @@ public class ThongKe extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaKH", "HoTenKH", "SoDT", "DiaChi"
             }
         ));
-        jScrollPane5.setViewportView(jTable4);
+        jScrollPane5.setViewportView(tblKhachhang);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlKhachhangLayout = new javax.swing.GroupLayout(pnlKhachhang);
+        pnlKhachhang.setLayout(pnlKhachhangLayout);
+        pnlKhachhangLayout.setHorizontalGroup(
+            pnlKhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlKhachhangLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        pnlKhachhangLayout.setVerticalGroup(
+            pnlKhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlKhachhangLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tabpnlQuanLy.addTab("Khách Hàng", jPanel6);
+        tabpnlQuanLy.addTab("Khách Hàng", pnlKhachhang);
 
-        jPanel7.setBackground(new java.awt.Color(255, 220, 126));
+        pnlCatruc.setBackground(new java.awt.Color(255, 220, 126));
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaTruc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaCaTruc", "GioBatDau", "GioKetCa"
             }
         ));
-        jScrollPane6.setViewportView(jTable5);
+        jScrollPane6.setViewportView(tblCaTruc);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlCatrucLayout = new javax.swing.GroupLayout(pnlCatruc);
+        pnlCatruc.setLayout(pnlCatrucLayout);
+        pnlCatrucLayout.setHorizontalGroup(
+            pnlCatrucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCatrucLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        pnlCatrucLayout.setVerticalGroup(
+            pnlCatrucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCatrucLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tabpnlQuanLy.addTab("Ca Trực", jPanel7);
+        tabpnlQuanLy.addTab("Ca Trực", pnlCatruc);
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenuBar1.setMaximumSize(new java.awt.Dimension(710, 29));
@@ -502,6 +517,10 @@ public class ThongKe extends javax.swing.JFrame {
         {
             selectByid(tblHoadon);
         }
+        else if(pnlPhieunhap.isShowing())
+        {
+            selectByid(tblPhieunhap);
+        }
     }//GEN-LAST:event_txtTimkiemActionPerformed
 
     private void cboChoncotItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboChoncotItemStateChanged
@@ -514,6 +533,11 @@ public class ThongKe extends javax.swing.JFrame {
         {
             this.showtableHoaDon();
         }
+        else if(pnlPhieunhap.isShowing())
+        {
+            this.showTablephieunhap();
+        }
+        
     }//GEN-LAST:event_cboChoncotItemStateChanged
 
     private void cboSapxeptheoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboSapxeptheoItemStateChanged
@@ -525,6 +549,10 @@ public class ThongKe extends javax.swing.JFrame {
         {
             this.showtableHoaDon();
         }
+        else if(pnlPhieunhap.isShowing())
+        {
+            this.showTablephieunhap();
+        }
     }//GEN-LAST:event_cboSapxeptheoItemStateChanged
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -534,6 +562,20 @@ public class ThongKe extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnXuatfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatfileActionPerformed
+        
+        if(pnlNhanvien.isShowing())
+        {
+            DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+            OutputExcel out = new OutputExcel("NhanVien", model);
+        }
+        else if(pnlHoadon.isShowing())
+        {
+            DefaultTableModel model = (DefaultTableModel) tblHoadon.getModel();
+            OutputExcel out = new OutputExcel("HoaDon", model);
+        }
+    }//GEN-LAST:event_btnXuatfileActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -552,40 +594,43 @@ public class ThongKe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
     private javax.swing.JMenu mnDanhmuc;
     private javax.swing.JMenu mnThemmoi;
     private javax.swing.JMenu mnThongke;
+    private javax.swing.JPanel pnlCatruc;
     private javax.swing.JPanel pnlHoadon;
+    private javax.swing.JPanel pnlKhachhang;
+    private javax.swing.JPanel pnlNguyenlieu;
     private javax.swing.JPanel pnlNhanvien;
+    private javax.swing.JPanel pnlPhieunhap;
     private javax.swing.JPanel pnlSapxep;
     private javax.swing.JPanel pnlTimkiem;
     private javax.swing.JPanel pnlTool;
     private javax.swing.JTabbedPane tabpnlQuanLy;
+    private javax.swing.JTable tblCaTruc;
     private javax.swing.JTable tblHoadon;
+    private javax.swing.JTable tblKhachhang;
+    private javax.swing.JTable tblNguyenLieu;
     private javax.swing.JTable tblNhanVien;
+    private javax.swing.JTable tblPhieunhap;
     private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 
     
     NhanVienDAO NVdao = new NhanVienDAO();
     HoaDonDAO HDdao = new HoaDonDAO();
+    PhieuNhapDAO PNDAO = new PhieuNhapDAO();
     NhanVien nhanVien = new NhanVien();
     Model.HoaDon hoaDon = new Model.HoaDon();
-    List<NhanVien> listnv = new ArrayList<NhanVien>();
+    PhieuNhap phieuNhap = new PhieuNhap();
+    
+    
     private void WatterMake(JTextField searchText, String chuoi) {
         searchText.setForeground(Color.GRAY);
         searchText.setText(chuoi);
@@ -610,7 +655,6 @@ public class ThongKe extends javax.swing.JFrame {
             }
             });
     }
-    
     public void showtableNhanvien()
     {
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
@@ -631,7 +675,7 @@ public class ThongKe extends javax.swing.JFrame {
                         nv.getLuong(),
                         nv.getMatKhau()
                     };
-                    model.addRow(row);    
+                    model.addRow(row);  
                 }
             } 
             catch (Exception e) {
@@ -648,8 +692,9 @@ public class ThongKe extends javax.swing.JFrame {
                 else{
                     a= "DESC";
                 }
-                List<NhanVien> list = NVdao.selectAllbyentity(nhanVien.getEntity().get(cboChoncot.getSelectedIndex()),a);
-                for (NhanVien nv : list) {
+
+                List<NhanVien> listnv = NVdao.selectAllbyentity(nhanVien.getEntity().get(cboChoncot.getSelectedIndex()),a);
+                for (NhanVien nv : listnv) {
                     Object[] row = {
                         nv.getMaNV(),
                         nv.getHoTen(),
@@ -661,7 +706,54 @@ public class ThongKe extends javax.swing.JFrame {
                         nv.getLuong(),
                         nv.getMatKhau()
                     };
-                    model.addRow(row);    
+                    model.addRow(row);   
+                    
+                }
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
+            }
+        }
+    }
+    public void showTablephieunhap()
+    {
+        DefaultTableModel model = (DefaultTableModel) tblPhieunhap.getModel();
+        model.setRowCount(0);
+        if(cboChoncot.getItemCount()<1 )
+        {
+            try {
+                List<PhieuNhap> list = PNDAO.selectAll();
+                for (PhieuNhap pn : list) {
+                    Object[] row = {
+                        pn.getMaPhieuNhap(),pn.getMaNgLieu(),pn.getDonGia(),pn.getDonViTinh(),pn.getSoLuong(),
+                        pn.getNgayLapPhieu(),pn.getNgayNhap(),pn.getMaCC(),pn.getNguoiNhap()
+                    };
+                    model.addRow(row);  
+                }
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi Truy Vấn Dữ Liệu 111!!");
+            }
+        }
+        else{
+            try {
+                String a;
+                if(cboSapxeptheo.getSelectedItem().equals("Tăng"))
+                {
+                    a = "ASC";
+                }
+                else{
+                    a= "DESC";
+                }
+
+                List<PhieuNhap> listnv = PNDAO.selectAllbyentity(phieuNhap.getEntity().get(cboChoncot.getSelectedIndex()),a);
+                for (PhieuNhap pn : listnv) {
+                    Object[] row = {
+                        pn.getMaPhieuNhap(),pn.getMaNgLieu(),pn.getDonGia(),pn.getDonViTinh(),pn.getSoLuong(),
+                        pn.getNgayLapPhieu(),pn.getNgayNhap(),pn.getMaCC(),pn.getNguoiNhap()
+                    };
+                    model.addRow(row);   
+                    
                 }
             } 
             catch (Exception e) {
@@ -782,6 +874,10 @@ public class ThongKe extends javax.swing.JFrame {
         
         
         
+        
+    }
+    public void getInfortable()
+    {
         
     }
     void ketThuc(){
